@@ -12,7 +12,7 @@
 
 Dhulikhel, Kavre
 
-![KU Logo](./images/ku_logo.png){width=150px}
+<img src="./images/ku_logo.png" width="150px" alt="KU Logo" />
 
 **A Project Report**
 
@@ -339,7 +339,7 @@ broadcast text messages in real time.
 
 <div align="center">
 
-![SyncStream Server](./images/syncstream_server.png){width=500px}
+<img src="./images/syncstream_server.png" width="500px" alt="SyncStream Server" />
 
 *Figure: SyncStream Server*
 
@@ -347,7 +347,7 @@ broadcast text messages in real time.
 
 <div align="center">
 
-![SyncStream Client](./images/syncstream_client.png){width=500px}
+<img src="./images/syncstream_client.png" width="500px" alt="SyncStream Client" />
 
 *Figure: SyncStream Client*
 
@@ -434,7 +434,7 @@ sending and receiving messages over the network.
 
 <div align="center">
 
-![System Architecture of SecureChat](./images/architecture.png){width=700px}
+<img src="./images/architecture.png" width="700px" alt="System Architecture of SecureChat" />
 
 *Figure: System Architecture of SecureChat*
 
@@ -454,7 +454,7 @@ The application consists of the following modules:
 
 <div align="center">
 
-![Use Case Diagram of SecureChat](./images/usecase.png){width=600px}
+<img src="./images/usecase.png" width="600px" alt="Use Case Diagram of SecureChat" />
 
 *Figure: Use Case Diagram of SecureChat*
 
@@ -730,7 +730,7 @@ to all connected clients.
 
 <div align="center">
 
-![Server Dashboard](./images/server_dashboard.jpeg){width=650px}
+<img src="./images/server_dashboard.jpeg" width="650px" alt="Server Dashboard" />
 
 *Figure: Server Dashboard*
 
@@ -741,7 +741,7 @@ join the chat room successfully using the login interface.
 
 <div align="center">
 
-![Client Login Window](./images/login_window.jpeg){width=550px}
+<img src="./images/login_window.jpeg" width="550px" alt="Client Login Window" />
 
 *Figure: Client Login Window*
 
@@ -753,7 +753,7 @@ updated correctly during communication.
 
 <div align="center">
 
-![SecureChat Main Chat Window](./images/chat_window.jpeg){width=700px}
+<img src="./images/chat_window.jpeg" width="700px" alt="SecureChat Main Chat Window" />
 
 *Figure: SecureChat Main Chat Window*
 
@@ -793,7 +793,7 @@ The project was completed through the following phases:
 
 <div align="center">
 
-![Project Gantt Chart](./images/ganttchart.png){width=800px}
+<img src="./images/ganttchart.png" width="800px" alt="Project Gantt Chart" />
 
 *Figure: Project Gantt Chart*
 

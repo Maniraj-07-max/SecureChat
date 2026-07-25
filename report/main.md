@@ -1,13 +1,13 @@
-:::: titlepage
-::: center
+:::: titlepage ::: center
 **Kathmandu University**
 
 **Department of Computer Science and Engineering**
 
 Dhulikhel, Kavre
 
-[image]{.image .placeholder original-image-src="images/ku_logo.png"
-original-image-title="" width="18%"}
+<figure id="logo" data-latex-placement="H">
+<img src="./images/ku_logo.png" style="width:80.0%" />
+</figure>
 
 **A Project Report**
 

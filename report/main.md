@@ -6,7 +6,7 @@
 Dhulikhel, Kavre
 
 <figure id="logo" data-latex-placement="H">
-<img src="./images/ku_logo.png" style="width:80.0%" />
+<img src="./images/ku_logo.png" style="width:18%" />
 </figure>
 
 **A Project Report**

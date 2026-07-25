@@ -12,7 +12,7 @@
 
 Dhulikhel, Kavre
 
-![KU Logo](./images/ku_logo.png)
+![KU Logo](./images/ku_logo.png){width=150px}
 
 **A Project Report**
 
@@ -337,13 +337,21 @@ SyncStream is a real-time, multi-user chat application built for
 Windows. It allows multiple users to connect to a central server and
 broadcast text messages in real time.
 
-![SyncStream Server](./images/syncstream_server.png)
+<div align="center">
+
+![SyncStream Server](./images/syncstream_server.png){width=500px}
 
 *Figure: SyncStream Server*
 
-![SyncStream Client](./images/syncstream_client.png)
+</div>
+
+<div align="center">
+
+![SyncStream Client](./images/syncstream_client.png){width=500px}
 
 *Figure: SyncStream Client*
+
+</div>
 
 ## Comparison with SecureChat
 
@@ -424,9 +432,13 @@ client connections and message broadcasting. Clients connect to the
 server through TCP sockets, perform key exchange, and communicate by
 sending and receiving messages over the network.
 
-![System Architecture of SecureChat](./images/architecture.png)
+<div align="center">
+
+![System Architecture of SecureChat](./images/architecture.png){width=700px}
 
 *Figure: System Architecture of SecureChat*
+
+</div>
 
 ## Major Modules
 
@@ -440,9 +452,13 @@ The application consists of the following modules:
 
 - **Security Module** -- Performs the Diffie--Hellman key exchange for secure communication.
 
-![Use Case Diagram of SecureChat](./images/usecase.png)
+<div align="center">
+
+![Use Case Diagram of SecureChat](./images/usecase.png){width=600px}
 
 *Figure: Use Case Diagram of SecureChat*
+
+</div>
 
 ## System Workflow
 
@@ -712,24 +728,36 @@ Multiple clients were able to connect to the server simultaneously and
 exchange messages in real time. The server correctly broadcast messages
 to all connected clients.
 
-![Server Dashboard](./images/server_dashboard.jpeg)
+<div align="center">
+
+![Server Dashboard](./images/server_dashboard.jpeg){width=650px}
 
 *Figure: Server Dashboard*
+
+</div>
 
 The authentication mechanism worked as expected, and users were able to
 join the chat room successfully using the login interface.
 
-![Client Login Window](./images/login_window.jpeg)
+<div align="center">
+
+![Client Login Window](./images/login_window.jpeg){width=550px}
 
 *Figure: Client Login Window*
+
+</div>
 
 After successful login, users entered the chat room where messages could
 be exchanged in real time. The member list and chat interface were
 updated correctly during communication.
 
-![SecureChat Main Chat Window](./images/chat_window.jpeg)
+<div align="center">
+
+![SecureChat Main Chat Window](./images/chat_window.jpeg){width=700px}
 
 *Figure: SecureChat Main Chat Window*
+
+</div>
 
 The Diffie--Hellman key exchange was successfully performed before
 communication, and automatic server discovery simplified the connection
@@ -763,9 +791,13 @@ The project was completed through the following phases:
 
 ## Gantt Chart
 
-![Project Gantt Chart](./images/ganttchart.png)
+<div align="center">
+
+![Project Gantt Chart](./images/ganttchart.png){width=800px}
 
 *Figure: Project Gantt Chart*
+
+</div>
 
 ## Team Responsibilities
 

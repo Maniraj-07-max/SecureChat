@@ -1,5 +1,10 @@
-::: {.titlepage}
-::: center
+# SecureChat Project Report
+
+## Title Page
+
+---
+
+<div align="center">
 
 **Kathmandu University**
 
@@ -7,9 +12,7 @@
 
 Dhulikhel, Kavre
 
-<figure id="logo" data-latex-placement="H">
-<img src="./images/ku_logo.png" style="width:18%" />
-</figure>
+![KU Logo](./images/ku_logo.png)
 
 **A Project Report**
 
@@ -17,34 +20,34 @@ on
 
 **SecureChat**
 
-A Secure LAN-Based Messaging Application
+### A Secure LAN-Based Messaging Application
 
 **Course No.: ENGG 102**
 
-(Submitted in Partial Fulfillment of the Requirements for Year I /
-Semester II in Computer Engineering)
+(Submitted in Partial Fulfillment of the Requirements for Year I / Semester II in Computer Engineering)
+
+---
 
 **Submitted by**
 
-Maniraj Baral (26)\
-Genius Bhandari (34)\
-Aayush Bist (43)\
-Prajwal Chamlagain (45)\
+Maniraj Baral (26)  
+Genius Bhandari (34)  
+Aayush Bist (43)  
+Prajwal Chamlagain (45)  
 Pratish Chaudhary (49)
 
 **Submitted to**
 
-Supervisor's Name\
+Supervisor's Name  
 Department of Computer Science and Engineering
 
 July 2026
 
-...
+</div>
 
-:::
-:::
+---
 
-# Abstract {#abstract .unnumbered}
+# Abstract {#abstract}
 
 SecureChat is a desktop-based messaging application developed using C++
 and the Qt framework. The project follows a client--server architecture
@@ -63,20 +66,20 @@ in a LAN environment and provide a strong foundation for future
 enhancements such as end-to-end encryption, internet-based
 communication, and file sharing.
 
-# Abbreviations {#abbreviations .unnumbered}
+# Abbreviations {#abbreviations}
 
-  ----- --------------------------------------
-  API   Application Programming Interface
-  C++   C Plus Plus
-  DH    Diffie--Hellman
-  GUI   Graphical User Interface
-  IDE   Integrated Development Environment
-  IP    Internet Protocol
-  LAN   Local Area Network
-  Qt    Cross-platform Application Framework
-  TCP   Transmission Control Protocol
-  UI    User Interface
-  ----- --------------------------------------
+| Abbreviation | Meaning |
+|---|---|
+| API | Application Programming Interface |
+| C++ | C Plus Plus |
+| DH | Diffie--Hellman |
+| GUI | Graphical User Interface |
+| IDE | Integrated Development Environment |
+| IP | Internet Protocol |
+| LAN | Local Area Network |
+| Qt | Cross-platform Application Framework |
+| TCP | Transmission Control Protocol |
+| UI | User Interface |
 
 # Introduction
 
@@ -328,21 +331,19 @@ communication mechanisms.
 
 Some examples of Academic Projects we came across are:
 
-### SyncStream:
+### SyncStream
 
 SyncStream is a real-time, multi-user chat application built for
 Windows. It allows multiple users to connect to a central server and
 broadcast text messages in real time.
 
-<figure id="fig:SyncStream:Server" data-latex-placement="H">
-<img src="./images/syncstream_server.png" style="width:80.0%" />
-<figcaption>SyncStream:Server</figcaption>
-</figure>
+![SyncStream Server](./images/syncstream_server.png)
 
-<figure id="fig:SyncStream:Client" data-latex-placement="H">
-<img src="./images/syncstream_client.png" style="width:80.0%" />
-<figcaption>SyncStream:Client</figcaption>
-</figure>
+*Figure: SyncStream Server*
+
+![SyncStream Client](./images/syncstream_client.png)
+
+*Figure: SyncStream Client*
 
 ## Comparison with SecureChat
 
@@ -423,56 +424,36 @@ client connections and message broadcasting. Clients connect to the
 server through TCP sockets, perform key exchange, and communicate by
 sending and receiving messages over the network.
 
-SecureChat follows a client--server architecture as shown in
-Figure [4.1](#fig:architecture){reference-type="ref"
-reference="fig:architecture"}. The server accepts client connections,
-manages communication, and broadcasts messages to all connected users.
+![System Architecture of SecureChat](./images/architecture.png)
 
-<figure id="fig:architecture" data-latex-placement="H">
-<img src="./images/architecture.png" style="width:80.0%" />
-<figcaption>System Architecture of SecureChat</figcaption>
-</figure>
+*Figure: System Architecture of SecureChat*
 
 ## Major Modules
 
 The application consists of the following modules:
 
-- **Server Module** -- Accepts client connections and broadcasts
-  messages.
+- **Server Module** -- Accepts client connections and broadcasts messages.
 
-- **Client Module** -- Provides the user interface and manages
-  communication with the server.
+- **Client Module** -- Provides the user interface and manages communication with the server.
 
-- **Communication Module** -- Handles TCP socket communication between
-  the client and server.
+- **Communication Module** -- Handles TCP socket communication between the client and server.
 
-- **Security Module** -- Performs the Diffie--Hellman key exchange for
-  secure communication.
+- **Security Module** -- Performs the Diffie--Hellman key exchange for secure communication.
 
-Figure [4.2](#fig:usecase){reference-type="ref" reference="fig:usecase"}
-illustrates the primary interactions between the user and the SecureChat
-application.
+![Use Case Diagram of SecureChat](./images/usecase.png)
 
-<figure id="fig:usecase" data-latex-placement="H">
-<img src="./images/usecase.png" style="width:75.0%" />
-<figcaption>Use Case Diagram of SecureChat</figcaption>
-</figure>
+*Figure: Use Case Diagram of SecureChat*
 
 ## System Workflow
 
 The overall workflow of the SecureChat application is as follows:
 
-1.  Start the server application.
-
-2.  Connect one or more clients to the server.
-
-3.  Perform secure key exchange.
-
-4.  Exchange messages between users.
-
-5.  Broadcast messages to all connected clients.
-
-6.  Disconnect from the server after communication.
+1. Start the server application.
+2. Connect one or more clients to the server.
+3. Perform secure key exchange.
+4. Exchange messages between users.
+5. Broadcast messages to all connected clients.
+6. Disconnect from the server after communication.
 
 # Implementation
 
@@ -521,13 +502,11 @@ users.
 
 The server consists of the following components:
 
-- **mainwindow** -- Controls the main server window and manages
-  communication.
+- **mainwindow** -- Controls the main server window and manages communication.
 
 - **authmanager** -- Handles user authentication and authorization.
 
-- **ServerDiscoveryBeacon** -- Allows clients to discover the server
-  automatically within the local network.
+- **ServerDiscoveryBeacon** -- Allows clients to discover the server automatically within the local network.
 
 ## Encryption Implementation
 
@@ -619,13 +598,11 @@ exchange and encrypted communication between multiple users.
 
 The current encryption implementation has several limitations:
 
-- The application does not provide forward secrecy across different
-  sessions.
+- The application does not provide forward secrecy across different sessions.
 
 - Message integrity and authentication are not implemented.
 
-- The repeating-key XOR cipher is not considered cryptographically
-  secure for real-world applications.
+- The repeating-key XOR cipher is not considered cryptographically secure for real-world applications.
 
 - Advanced encryption algorithms such as AES have not been implemented.
 
@@ -638,21 +615,17 @@ whenever new messages arrive.
 
 The client is composed of the following components:
 
-- **Login Window** -- Allows users to enter their credentials and the
-  IP-address of the server where the server is hosted before joining the
-  chat.
+- **Login Window** -- Allows users to enter their credentials and the IP-address of the server where the server is hosted before joining the chat.
 
 - **Main Window** -- Displays conversations and provides message input.
 
 - **Auth Client** -- Communicates with the server for authentication.
 
-- **Bubble Message** -- Displays chat messages in a user-friendly bubble
-  format.
+- **Bubble Message** -- Displays chat messages in a user-friendly bubble format.
 
 - **System Log Dialog** -- Displays important system messages and logs.
 
-- **Server Discoverer** -- Detects available servers on the local
-  network.
+- **Server Discoverer** -- Detects available servers on the local network.
 
 ## Graphical User Interface
 
@@ -688,19 +661,13 @@ encryption-related functionality for secure communication.
 
 The overall implementation process follows these steps:
 
-1.  Start the server application.
-
-2.  Clients discover or connect to the server.
-
-3.  User authentication is performed.
-
-4.  Diffie--Hellman key exchange establishes a shared secret.
-
-5.  Messages are exchanged between connected users.
-
-6.  The server broadcasts messages to all active clients.
-
-7.  Clients disconnect when communication is complete.
+1. Start the server application.
+2. Clients discover or connect to the server.
+3. User authentication is performed.
+4. Diffie--Hellman key exchange establishes a shared secret.
+5. Messages are exchanged between connected users.
+6. The server broadcasts messages to all active clients.
+7. Clients disconnect when communication is complete.
 
 # Testing and Results
 
@@ -727,21 +694,16 @@ The application was tested under the following environment:
 
 ## Test Cases
 
-The following test cases were performed to verify the functionality of
-the application.
-
-   **Test ID**  **Description**                                **Result**
-  ------------- --------------------------------------------- ------------
-      TC-01     Server starts successfully                       Passed
-      TC-02     Client connects to server                        Passed
-      TC-03     User authentication                              Passed
-      TC-04     Message transmission                             Passed
-      TC-05     Message broadcasting                             Passed
-      TC-06     Multiple clients communicate simultaneously      Passed
-      TC-07     Server discovery                                 Passed
-      TC-08     Secure key exchange                              Passed
-
-  : Test Cases
+| Test ID | Description | Result |
+|---------|-------------|--------|
+| TC-01 | Server starts successfully | Passed |
+| TC-02 | Client connects to server | Passed |
+| TC-03 | User authentication | Passed |
+| TC-04 | Message transmission | Passed |
+| TC-05 | Message broadcasting | Passed |
+| TC-06 | Multiple clients communicate simultaneously | Passed |
+| TC-07 | Server discovery | Passed |
+| TC-08 | Secure key exchange | Passed |
 
 ## Results
 
@@ -750,37 +712,24 @@ Multiple clients were able to connect to the server simultaneously and
 exchange messages in real time. The server correctly broadcast messages
 to all connected clients.
 
-Figure [6.1](#fig:serverdashboard){reference-type="ref"
-reference="fig:serverdashboard"} shows the server dashboard during
-execution.
+![Server Dashboard](./images/server_dashboard.jpeg)
 
-<figure id="fig:serverdashboard" data-latex-placement="H">
-<img src="./images/server_dashboard.jpeg" />
-<figcaption>Server Dashboard</figcaption>
-</figure>
+*Figure: Server Dashboard*
 
 The authentication mechanism worked as expected, and users were able to
 join the chat room successfully using the login interface.
 
-Figure [6.2](#fig:loginwindow){reference-type="ref"
-reference="fig:loginwindow"} shows the client login window.
+![Client Login Window](./images/login_window.jpeg)
 
-<figure id="fig:loginwindow" data-latex-placement="H">
-<img src="./images/login_window.jpeg" style="width:50.0%" />
-<figcaption>Client Login Window</figcaption>
-</figure>
+*Figure: Client Login Window*
 
 After successful login, users entered the chat room where messages could
 be exchanged in real time. The member list and chat interface were
 updated correctly during communication.
 
-Figure [6.3](#fig:chatwindow){reference-type="ref"
-reference="fig:chatwindow"} shows the SecureChat main chat window.
+![SecureChat Main Chat Window](./images/chat_window.jpeg)
 
-<figure id="fig:chatwindow" data-latex-placement="H">
-<img src="./images/chat_window.jpeg" />
-<figcaption>SecureChat Main Chat Window</figcaption>
-</figure>
+*Figure: SecureChat Main Chat Window*
 
 The Diffie--Hellman key exchange was successfully performed before
 communication, and automatic server discovery simplified the connection
@@ -814,25 +763,19 @@ The project was completed through the following phases:
 
 ## Gantt Chart
 
-Figure [7.1](#fig:gantt){reference-type="ref" reference="fig:gantt"}
-illustrates the project schedule followed during development.
+![Project Gantt Chart](./images/ganttchart.png)
 
-<figure id="fig:gantt" data-latex-placement="H">
-<img src="./images/ganttchart.png" style="width:95.0%" />
-<figcaption>Project Gantt Chart</figcaption>
-</figure>
+*Figure: Project Gantt Chart*
 
 ## Team Responsibilities
 
-  **Member**           **Responsibility**
-  -------------------- -------------------------------------------
-  Maniraj Baral        GUI development and functionality testing
-  Genius Bhandari      Security module and integration
-  Aayush Bist          Documentation and testing
-  Prajwal Chamlagain   Client module development and GUI testing
-  Pratish Chaudhary    Server implementation and networking
-
-  : Division of Work Among Team Members
+| Member | Responsibility |
+|--------|-----------------|
+| Maniraj Baral | GUI development and functionality testing |
+| Genius Bhandari | Security module and integration |
+| Aayush Bist | Documentation and testing |
+| Prajwal Chamlagain | Client module development and GUI testing |
+| Pratish Chaudhary | Server implementation and networking |
 
 ## Summary
 
@@ -864,20 +807,17 @@ The current version of SecureChat has the following limitations:
 
 - File and media sharing are not supported.
 
-- Group management features such as creating or deleting chat groups are
-  not available.
+- Group management features such as creating or deleting chat groups are not available.
 
 - User accounts are limited to the implemented authentication mechanism.
 
-- Message history is not permanently stored after the application is
-  closed.
+- Message history is not permanently stored after the application is closed.
 
 - The application is primarily designed for desktop platforms.
 
 ## Future Enhancements
 
-The following improvements can be made in future versions of the
-application:
+The following improvements can be made in future versions of the application:
 
 - Support communication over the Internet instead of only LAN.
 
@@ -895,13 +835,13 @@ application:
 
 - Develop mobile versions of the application for Android and iOS.
 
-  ## Summary
+## Summary
 
-  The current implementation of SecureChat demonstrates the fundamental
-  concepts of networking, client--server communication, and secure key
-  exchange. With additional features such as internet support,
-  multimedia sharing, and enhanced security, the application can be
-  further developed into a more complete messaging platform.
+The current implementation of SecureChat demonstrates the fundamental
+concepts of networking, client--server communication, and secure key
+exchange. With additional features such as internet support,
+multimedia sharing, and enhanced security, the application can be
+further developed into a more complete messaging platform.
 
 # Conclusion and References
 
@@ -922,29 +862,29 @@ sharing, and internet-based communication.
 
 ## References
 
-1.  Bjarne Stroustrup. *The C++ Programming Language (4th Edition)*.
-    Addison-Wesley Professional, 2013.
+1. Bjarne Stroustrup. *The C++ Programming Language (4th Edition)*.
+   Addison-Wesley Professional, 2013.
 
-2.  Qt Documentation. Available: <https://doc.qt.io/>
+2. Qt Documentation. Available: https://doc.qt.io/
 
-3.  Qt Network Module Documentation. Available:
-    <https://doc.qt.io/qt-6/qtnetwork-index.html>
+3. Qt Network Module Documentation. Available:
+   https://doc.qt.io/qt-6/qtnetwork-index.html
 
-4.  CMake Documentation. Available: <https://cmake.org/documentation/>
+4. CMake Documentation. Available: https://cmake.org/documentation/
 
-5.  Git Documentation. Available: <https://git-scm.com/doc>
+5. Git Documentation. Available: https://git-scm.com/doc
 
-6.  GitHub Documentation. Available: <https://docs.github.com/>
+6. GitHub Documentation. Available: https://docs.github.com/
 
-7.  Academic Project - SyncStream by yadunand-kamath. Available:
-    <https://github.com/yadunand-kamath/SyncStream>
+7. Academic Project - SyncStream by yadunand-kamath. Available:
+   https://github.com/yadunand-kamath/SyncStream
 
-8.  Deffie-Hellman Key Exchange Available:
-    <http://geeksforgeeks.org/computer-networks/implementation-diffie-hellman-algorithm/>
+8. Deffie-Hellman Key Exchange. Available:
+   http://geeksforgeeks.org/computer-networks/implementation-diffie-hellman-algorithm/
 
-9.  GitHub Documentation. Available: <https://docs.github.com/>
+9. GitHub Documentation. Available: https://docs.github.com/
 
 10. XOR Cipher. Available:
-    <https://www.geeksforgeeks.org/dsa/xor-cipher/>
+    https://www.geeksforgeeks.org/dsa/xor-cipher/
 
-11. QUdpSockets. Available: <https://doc.qt.io/qt-6/qudpsocket.html>
+11. QUdpSockets. Available: https://doc.qt.io/qt-6/qudpsocket.html

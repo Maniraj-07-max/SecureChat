@@ -1,4 +1,6 @@
-:::: titlepage ::: center
+::: {.titlepage}
+::: center
+
 **Kathmandu University**
 
 **Department of Computer Science and Engineering**
@@ -36,8 +38,11 @@ Supervisor's Name\
 Department of Computer Science and Engineering
 
 July 2026
+
+...
+
 :::
-::::
+:::
 
 # Abstract {#abstract .unnumbered}
 

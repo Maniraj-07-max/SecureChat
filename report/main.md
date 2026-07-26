@@ -925,396 +925,123 @@ sharing, and internet-based communication.
 
 # Appendix
 
-## A. Installation and Setup Guide
+## A. Repository Structure
 
-### A.1 Prerequisites
+The SecureChat project is organized as follows:
 
-Before setting up SecureChat, ensure that your system meets the following requirements:
+```
+SecureChat/
+├── Server/                                    # Server application
+│   ├── CMakeLists.txt                        # Server build configuration
+│   ├── main.cpp                              # Server entry point
+│   ├── mainwindow.h / mainwindow.cpp / .ui  # Server GUI
+│   ├── authmanager.h / authmanager.cpp      # Authentication handler
+│   └── ServerDiscoveryBeacon.h               # LAN server discovery
+│
+├── client/                                    # Client application
+│   ├── CMakeLists.txt                        # Client build configuration
+│   ├── main.cpp                              # Client entry point
+│   ├── mainwindow.h / mainwindow.cpp / .ui  # Chat interface
+│   ├── loginwindow.h / loginwindow.cpp / .ui # Login interface
+│   ├── bubblemessage.h / bubblemessage.cpp  # Message display
+│   ├── QtEncryptionEngine.h                  # Encryption utilities
+│   ├── serverdiscoverer.h                    # Server discovery
+│   ├── systemlogdialog.h / .cpp / .ui       # System logs
+│   ├── authclient.h / authclient.cpp        # Client authentication
+│   ├── resource.qrc                          # Qt resources
+│   └── images/                               # Assets
+│
+└── report/                                    # Documentation
+    └── main.md                               # This report
+```
 
-- **Qt 6.0 or higher** -- Download from https://www.qt.io/download
-- **CMake 3.16 or higher** -- Download from https://cmake.org/download/
-- **C++ Compiler** -- GCC (Linux), Clang (macOS), or MSVC (Windows)
-- **Git** -- Download from https://git-scm.com/download
+## B. Installation and Building
 
-### A.2 Cloning the Repository
+### B.1 Prerequisites
+
+- **Qt 6.0+** — https://www.qt.io/download
+- **CMake 3.16+** — https://cmake.org/download/
+- **C++ Compiler (C++17)** — MSVC, GCC, or Clang
+- **Git** — https://git-scm.com/download
+
+### B.2 Building
 
 ```bash
+# Clone repository
 git clone https://github.com/PratishChaudhary/SecureChat.git
 cd SecureChat
+
+# Build Server
+cd Server && mkdir build && cd build
+cmake .. && make
+
+# Build Client (from SecureChat root)
+cd ../../client && mkdir build && cd build
+cmake .. && make
 ```
 
-### A.3 Building the Project
-
-#### On Windows (Qt Creator):
-
-1. Open Qt Creator
-2. Click **File → Open File or Project**
-3. Navigate to the SecureChat directory and open **CMakeLists.txt**
-4. Configure the project with your Qt installation
-5. Click **Build → Build All**
-
-#### On Linux/macOS (Command Line):
+### B.3 Running
 
 ```bash
-mkdir build
-cd build
-cmake ..
-make
+# Terminal 1: Start server
+./Server/build/Server
+
+# Terminal 2+: Start clients
+./client/build/Client
 ```
 
-### A.4 Running the Application
+## C. Key Components
 
-#### Starting the Server:
+| Module | File | Purpose |
+|--------|------|---------|
+| **Server** | `Server/mainwindow.cpp` | Manages connections, broadcasts messages |
+| **Server Auth** | `Server/authmanager.cpp` | Validates client credentials |
+| **Server Discovery** | `Server/ServerDiscoveryBeacon.h` | UDP broadcast for LAN discovery |
+| **Client UI** | `client/mainwindow.cpp` | Chat interface & message display |
+| **Client Login** | `client/loginwindow.cpp` | Authentication & server connection |
+| **Encryption** | `client/QtEncryptionEngine.h` | Diffie-Hellman & XOR cipher |
+| **Server Discovery** | `client/serverdiscoverer.h` | Automatic server detection |
 
-```bash
-./SecureChatServer
+## D. Protocol Details
+
+**Message Format:**
 ```
-
-The server will listen on port 5555 by default.
-
-#### Starting the Client:
-
-```bash
-./SecureChatClient
-```
-
-Enter the server's IP address and port number in the login window to connect.
-
----
-
-## B. Code Samples
-
-### B.1 TCP Server Implementation (Server Accept Connection)
-
-```cpp
-void Server::onNewConnection()
-{
-    QTcpSocket* socket = tcpServer->nextPendingConnection();
-    
-    if (socket == nullptr) {
-        return;
-    }
-    
-    connect(socket, &QTcpSocket::readyRead, this, &Server::onReadyRead);
-    connect(socket, &QTcpSocket::disconnected, this, &Server::onClientDisconnected);
-    
-    clientSockets.append(socket);
-    
-    qDebug() << "New client connected from:" 
-             << socket->peerAddress().toString() << ":"
-             << socket->peerPort();
-    
-    logMessage("Client connected: " + socket->peerAddress().toString());
-}
-```
-
-### B.2 Diffie-Hellman Key Generation
-
-```cpp
-long long DHKeyGenerator::generatePublicKey(long long privateKey, 
-                                            long long generator, 
-                                            long long prime)
-{
-    long long publicKey = 1;
-    long long base = generator;
-    long long exponent = privateKey;
-    
-    // Modular exponentiation: (base^exponent) mod prime
-    while (exponent > 0) {
-        if (exponent % 2 == 1) {
-            publicKey = (publicKey * base) % prime;
-        }
-        exponent = exponent >> 1;
-        base = (base * base) % prime;
-    }
-    
-    return publicKey;
-}
-
-long long DHKeyGenerator::generateSharedSecret(long long peerPublicKey,
-                                               long long privateKey,
-                                               long long prime)
-{
-    return generatePublicKey(privateKey, peerPublicKey, prime);
-}
-```
-
-### B.3 XOR Encryption Implementation
-
-```cpp
-QString Encryption::xorEncrypt(const QString& plaintext, 
-                               const QString& key)
-{
-    QString ciphertext = plaintext;
-    int keyLength = key.length();
-    
-    for (int i = 0; i < plaintext.length(); ++i) {
-        int keyIndex = i % keyLength;
-        ciphertext[i] = QChar(plaintext[i].unicode() ^ key[keyIndex].unicode());
-    }
-    
-    return ciphertext;
-}
-
-QString Encryption::xorDecrypt(const QString& ciphertext,
-                               const QString& key)
-{
-    // XOR decryption is the same as encryption
-    return xorEncrypt(ciphertext, key);
-}
-```
-
-### B.4 Client Connection to Server
-
-```cpp
-void Client::connectToServer(const QString& ipAddress, int port)
-{
-    if (tcpSocket->state() == QAbstractSocket::ConnectingState ||
-        tcpSocket->state() == QAbstractSocket::ConnectedState) {
-        return;
-    }
-    
-    tcpSocket->connectToHost(ipAddress, port);
-    
-    if (!tcpSocket->waitForConnected(5000)) {
-        emit connectionFailed("Failed to connect to server");
-        return;
-    }
-    
-    qDebug() << "Connected to server at" << ipAddress << ":" << port;
-    emit connectionSucceeded();
-}
-```
-
-### B.5 Message Broadcasting from Server
-
-```cpp
-void Server::broadcastMessage(const QString& senderName, 
-                              const QString& encryptedMessage)
-{
-    QByteArray data;
-    QDataStream out(&data, QIODevice::WriteOnly);
-    
-    out << senderName;
-    out << encryptedMessage;
-    out << QDateTime::currentDateTime().toString("hh:mm:ss");
-    
-    for (QTcpSocket* socket : clientSockets) {
-        if (socket->state() == QAbstractSocket::ConnectedState) {
-            socket->write(data);
-            socket->flush();
-        }
-    }
-    
-    logMessage("Message broadcasted from: " + senderName);
-}
-```
-
----
-
-## C. Configuration Files
-
-### C.1 CMakeLists.txt
-
-```cmake
-cmake_minimum_required(VERSION 3.16)
-project(SecureChat)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
-
-find_package(Qt6 COMPONENTS 
-    Core 
-    Gui 
-    Widgets 
-    Network 
-    REQUIRED
-)
-
-# Server executable
-add_executable(SecureChatServer
-    src/server/main.cpp
-    src/server/server.cpp
-    src/server/server.h
-    src/server/authmanager.cpp
-    src/server/authmanager.h
-    src/security/encryption.cpp
-    src/security/encryption.h
-)
-
-target_link_libraries(SecureChatServer
-    Qt6::Core
-    Qt6::Network
-    Qt6::Gui
-    Qt6::Widgets
-)
-
-# Client executable
-add_executable(SecureChatClient
-    src/client/main.cpp
-    src/client/mainwindow.cpp
-    src/client/mainwindow.h
-    src/client/loginwindow.cpp
-    src/client/loginwindow.h
-    src/client/authclient.cpp
-    src/client/authclient.h
-    src/security/encryption.cpp
-    src/security/encryption.h
-)
-
-target_link_libraries(SecureChatClient
-    Qt6::Core
-    Qt6::Network
-    Qt6::Gui
-    Qt6::Widgets
-)
-```
-
-### C.2 Server Configuration (config.txt)
-
-```
-# SecureChat Server Configuration
-SERVER_PORT=5555
-MAX_CONNECTIONS=100
-MESSAGE_BUFFER_SIZE=4096
-DH_PRIME=10007
-DH_GENERATOR=5
-HEARTBEAT_INTERVAL=30000
-LOG_FILE=server.log
-ENABLE_ENCRYPTION=true
-```
-
----
-
-## D. Protocol Specification
-
-### D.1 Message Format
-
-All messages transmitted between client and server follow this format:
-
-```
-[Message Type (1 byte)] [Length (4 bytes)] [Payload (variable)]
+[Type: 1 byte] [Length: 4 bytes] [Payload: variable]
 ```
 
 **Message Types:**
-- `0x01` -- Authentication Request
-- `0x02` -- Authentication Response
-- `0x03` -- DH Public Key Exchange
-- `0x04` -- Room Key Distribution
-- `0x05` -- Chat Message
-- `0x06` -- User List Update
-- `0x07` -- Disconnect Notification
-- `0x08` -- Server Discovery Beacon
+- `0x01` - Authentication Request
+- `0x03` - DH Public Key Exchange
+- `0x05` - Chat Message
+- `0x08` - Server Discovery Beacon
 
-### D.2 Authentication Protocol
+## E. Building Configuration
 
-1. Client sends username and password (encrypted with DH shared secret)
-2. Server validates credentials against user database
-3. Server responds with success/failure status
-4. Upon success, server initiates DH key exchange
+Both Server and Client use:
+```cmake
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_AUTOMOC ON)      # Auto-process Qt MOC
+set(CMAKE_AUTOUIC ON)      # Auto-compile UI files
+set(CMAKE_AUTORCC ON)      # Auto-compile resources
 
-### D.3 Diffie-Hellman Exchange Sequence
-
-```
-Client                              Server
-  |                                   |
-  |------ DH_REQUEST ------->         |
-  |                                   |
-  |    <----- P, G, ServerPublicKey --|
-  |                                   |
-  |----- ClientPublicKey ---->        |
-  |                                   |
-  |    <----- EncryptedRoomKey -------|
-  |                                   |
-  V                                   V
+find_package(Qt6 COMPONENTS Widgets Network REQUIRED)
 ```
 
----
+**Languages:** 91% C++ • 9% CMake
 
-## E. Troubleshooting Guide
+## F. Quick Troubleshooting
 
-### E.1 Connection Issues
-
-**Problem:** Client cannot connect to server
-- **Solution 1:** Verify server is running: Check if port 5555 is open using `netstat -an`
-- **Solution 2:** Verify IP address: Use `ipconfig` (Windows) or `ifconfig` (Linux) to find correct server IP
-- **Solution 3:** Check firewall: Ensure firewall permits connection on port 5555
-
-### E.2 Build Errors
-
-**Problem:** "Qt libraries not found"
-- **Solution:** Set Qt path in CMake: `-DQt6_DIR=/path/to/qt6/lib/cmake/Qt6`
-
-**Problem:** "C++ compiler not found"
-- **Solution:** Install a C++ compiler appropriate for your OS
-
-### E.3 Encryption Issues
-
-**Problem:** Messages appear corrupted after encryption
-- **Solution 1:** Verify DH key exchange completed successfully
-- **Solution 2:** Check that both client and server have the same room key
-- **Solution 3:** Ensure XOR cipher is applied correctly
-
-### E.4 Performance Issues
-
-**Problem:** Messages delayed or slow transmission
-- **Solution 1:** Reduce MAX_CONNECTIONS if server is overloaded
-- **Solution 2:** Increase MESSAGE_BUFFER_SIZE in configuration
-- **Solution 3:** Check network bandwidth and latency with `ping`
-
----
-
-## F. Testing Scenarios
-
-### F.1 Single Client Test
-
-1. Start server
-2. Start one client
-3. Authenticate with credentials
-4. Send test messages
-5. Verify messages appear in UI
-6. Disconnect
-
-### F.2 Multiple Client Test
-
-1. Start server
-2. Start 3-5 client instances
-3. Authenticate all clients
-4. Have each client send messages
-5. Verify all clients receive all messages
-6. Disconnect clients one by one
-
-### F.3 Security Test
-
-1. Start server and client
-2. Use packet sniffer (Wireshark) to capture traffic
-3. Verify messages are encrypted in transit
-4. Attempt to decrypt without knowing room key
-5. Verify decryption fails
-
----
+| Problem | Solution |
+|---------|----------|
+| Qt not found | Set `-DQt6_DIR=/path/to/Qt6/lib/cmake/Qt6` in cmake |
+| Port 5555 in use | Change port in `Server/mainwindow.cpp` or wait 30s |
+| Connection fails | Check firewall allows port 5555; verify server IP |
+| Build fails | Ensure Qt 6, CMake 3.16+, and C++17 compiler installed |
+| Encryption issues | Verify Diffie-Hellman key exchange completed; check room key |
 
 ## G. Additional Resources
 
-- **Qt Documentation:** https://doc.qt.io/qt-6/
-- **Socket Programming Guide:** https://doc.qt.io/qt-6/qtsockets-index.html
-- **Cryptography Basics:** https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
-- **CMake Tutorial:** https://cmake.org/cmake/help/latest/guide/tutorial/index.html
-- **GitHub Repository:** https://github.com/PratishChaudhary/SecureChat
-
----
-
-## H. Known Issues and Workarounds
-
-| Issue | Workaround | Status |
-|-------|-----------|--------|
-| Connection timeout after 5 minutes of inactivity | Implement heartbeat mechanism | In Progress |
-| Memory leak with long-running servers | Profile with Valgrind and fix allocations | Open |
-| GUI becomes unresponsive during large message broadcasts | Use threading for network operations | Planned |
-| XOR cipher weak against frequency analysis | Implement AES encryption | Future Enhancement |
-| No persistence of chat history | Implement SQLite database | Planned |
-
+- **Qt 6 Documentation**: https://doc.qt.io/qt-6/
+- **Socket Programming**: https://doc.qt.io/qt-6/qtsockets-index.html
+- **Diffie-Hellman**: https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
+- **GitHub Repository**: https://github.com/PratishChaudhary/SecureChat

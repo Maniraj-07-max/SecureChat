@@ -1034,14 +1034,6 @@ find_package(Qt6 COMPONENTS Widgets Network REQUIRED)
 | Problem | Solution |
 |---------|----------|
 | Qt not found | Set `-DQt6_DIR=/path/to/Qt6/lib/cmake/Qt6` in cmake |
-| Port 5555 in use | Change port in `Server/mainwindow.cpp` or wait 30s |
-| Connection fails | Check firewall allows port 5555; verify server IP |
+| Connection fails | Check firewall allows port 8080; verify server IP |
 | Build fails | Ensure Qt 6, CMake 3.16+, and C++17 compiler installed |
 | Encryption issues | Verify Diffie-Hellman key exchange completed; check room key |
-
-## G. Additional Resources
-
-- **Qt 6 Documentation**: https://doc.qt.io/qt-6/
-- **Socket Programming**: https://doc.qt.io/qt-6/qtsockets-index.html
-- **Diffie-Hellman**: https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
-- **GitHub Repository**: https://github.com/PratishChaudhary/SecureChat

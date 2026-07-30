@@ -76,6 +76,7 @@ communication, and file sharing.
 | GUI | Graphical User Interface |
 | IDE | Integrated Development Environment |
 | IP | Internet Protocol |
+| JSON | JavaScript Object Notation |
 | LAN | Local Area Network |
 | Qt | Cross-platform Application Framework |
 | TCP | Transmission Control Protocol |
@@ -955,42 +956,7 @@ SecureChat/
     └── main.md                               # This report
 ```
 
-## B. Installation and Building
-
-### B.1 Prerequisites
-
-- **Qt 6.0+** — https://www.qt.io/download
-- **CMake 3.16+** — https://cmake.org/download/
-- **C++ Compiler (C++17)** — MSVC, GCC, or Clang
-- **Git** — https://git-scm.com/download
-
-### B.2 Building
-
-```bash
-# Clone repository
-git clone https://github.com/PratishChaudhary/SecureChat.git
-cd SecureChat
-
-# Build Server
-cd Server && mkdir build && cd build
-cmake .. && make
-
-# Build Client (from SecureChat root)
-cd ../../client && mkdir build && cd build
-cmake .. && make
-```
-
-### B.3 Running
-
-```bash
-# Terminal 1: Start server
-./Server/build/Server
-
-# Terminal 2+: Start clients
-./client/build/Client
-```
-
-## C. Key Components
+## B. Key Components
 
 | Module | File | Purpose |
 |--------|------|---------|
@@ -1002,20 +968,43 @@ cmake .. && make
 | **Encryption** | `client/QtEncryptionEngine.h` | Diffie-Hellman & XOR cipher |
 | **Server Discovery** | `client/serverdiscoverer.h` | Automatic server detection |
 
-## D. Protocol Details
+## C. Protocol Details
 
-**Message Format:**
+SecureChat uses a JSON-based message protocol for client-server communication. All messages are transmitted as UTF-8 encoded JSON strings over TCP connections, enabling structured data exchange and easy extensibility.
+
+### General Message Structure
+
+All messages follow this base JSON structure:
+
+```json
+{
+  "type": "MESSAGE_TYPE",
+  "timestamp": "2026-07-26T14:30:45Z",
+  "sender": "username",
+  "payload": {
+    // Message-specific fields
+  }
+}
 ```
-[Type: 1 byte] [Length: 4 bytes] [Payload: variable]
-```
 
-**Message Types:**
-- `0x01` - Authentication Request
-- `0x03` - DH Public Key Exchange
-- `0x05` - Chat Message
-- `0x08` - Server Discovery Beacon
+### JSON Field Descriptions
 
-## E. Building Configuration
+| Field | Type | Description |
+|-------|------|-------------|
+| `type` | String | Message type identifier (AUTH_REQUEST, DH_KEY_EXCHANGE, CHAT_MESSAGE, SERVER_DISCOVERY, USER_LIST, SYSTEM_MESSAGE) |
+| `timestamp` | String (ISO 8601) | UTC timestamp when message was created |
+| `sender` | String | Username of the message sender |
+| `payload` | Object | Message-specific data (varies by message type) |
+
+### Transmission Protocol
+
+1. Each JSON message is UTF-8 encoded
+2. Messages are transmitted directly over TCP sockets
+3. No frame delimiters are required (Qt handles socket buffering)
+4. Clients parse incoming data as complete JSON objects
+5. All encryption operations occur on the `payload` content for CHAT_MESSAGE types
+
+## D. Building Configuration
 
 Both Server and Client use:
 ```cmake
@@ -1029,11 +1018,12 @@ find_package(Qt6 COMPONENTS Widgets Network REQUIRED)
 
 **Languages:** 91% C++ • 9% CMake
 
-## F. Quick Troubleshooting
+## E. Quick Troubleshooting
 
 | Problem | Solution |
 |---------|----------|
 | Qt not found | Set `-DQt6_DIR=/path/to/Qt6/lib/cmake/Qt6` in cmake |
-| Connection fails | Check firewall allows port 8080; verify server IP |
 | Build fails | Ensure Qt 6, CMake 3.16+, and C++17 compiler installed |
 | Encryption issues | Verify Diffie-Hellman key exchange completed; check room key |
+| JSON parsing error | Verify message format matches protocol specification; ensure UTF-8 encoding |
+
